@@ -21,7 +21,7 @@ weight_decay = 0.0
 train_batch_size: int = 2
 eval_batch_size: int = 2
 
-max_epoch: int = 3
+max_epoch: int = 20
 target_acc: float = 0.73
 
 do_train = True

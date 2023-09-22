@@ -94,7 +94,8 @@ class Trainer:
             acc=state.acc,
             time=time.time() - eval_start)
         driver.event(Event.EVALUATE, eval_result)
-        self.detect_training_status(state)
+        if state.epoch % 10 == 0:
+            self.detect_training_status(state)
 
 
     def train_one_step(self, data):
