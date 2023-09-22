@@ -23,5 +23,5 @@ def create_optimizer(model, args):
             0.0,
         },
     ]
-    optimizer = torch.optim.Adam(optimizer_grouped_parameters, lr=args.lr)
+    optimizer = torch.optim.AdamW(optimizer_grouped_parameters, lr=args.lr)
     return optimizer

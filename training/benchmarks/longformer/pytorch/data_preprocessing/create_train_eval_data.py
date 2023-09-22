@@ -20,7 +20,7 @@ def main():
 
     tokenizer = LongformerTokenizer.from_pretrained('allenai/longformer-base-4096', use_auto_token=False)
     data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm_probability=0.15)
-    raw_datasets = load_dataset("wikitext", "wikitext-2-raw-v1")
+    raw_datasets = load_dataset("enwik8", "enwik8-raw")
     column_names = list(raw_datasets["train"].features)
     text_column_name = "text" if "text" in column_names else column_names[0]
     max_seq_length = tokenizer.model_max_length
@@ -60,10 +60,11 @@ def main():
                     load_from_cache_file=True,
                     desc=f"Grouping texts in chunks of {max_seq_length}",
                 )
-    train_dataset = tokenized_datasets['train'].with_format('numpy')
+
+    train_dataset = tokenized_datasets['train'][slice(1, 26000, None)]
     save_dataset(train_dataset, train_datapath)
 
-    validation_dataset = tokenized_datasets['validation'].with_format('numpy')
+    validation_dataset = tokenized_datasets['train'][slice(26000, 28333, None)]
     save_dataset(validation_dataset, eval_datapath)
 
 if __name__ == "__main__":
