@@ -20,7 +20,7 @@ MASTERADDR=102.168.1.2
 MASTERPORT=29501
 
 export PYTHONPATH=$PYTHONPATH:$SCALEHOME
-export XDNN_FC_GEMM_DTYPE="float32"
+export XDNN_FC_GEMM_DTYPE="float16"
 
 VOCAB_FILE=$SCALEHOME/examples/aquila/tokenizer/vocab.json
 MERGE_FILE=$SCALEHOME/examples/aquila/tokenizer/merges.txt
@@ -48,10 +48,9 @@ TRAINING_ARGS="
 "
 
 MIXED_PRECISION_ARGS="
-    --embedding-weights-in-fp32 \
-    --rotary-position-embeddings-in-fp32 \
-    --attention-softmax-in-fp32 \
-    --accumulate-allreduce-grads-in-fp32
+    --fp16 \
+    --initial-loss-scale 522893 \
+    --min-loss-scale 1.0 \
 "
 
 DATA_ARGS="
@@ -78,7 +77,6 @@ NETWORK_ARGS="
     --swiglu \
     --multiple-of 256 \
     --apply-layernorm-rms \
-    --rotary-interleaved-patch \
     --untie-embeddings-and-output-weights
 "
 
